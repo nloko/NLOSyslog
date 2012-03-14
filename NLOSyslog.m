@@ -222,6 +222,11 @@
     aslresponse response = asl_search(NULL, query);
     
     while (NULL != (msg = aslresponse_next(response))) {
+        // Since we could be potentially creating a lot of autoreleased objects
+        // here, let's use our own pool
+        //
+        NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+        
         NSMutableDictionary *logEntry = [[NSMutableDictionary alloc] init];
         
         for (int i = 0; (NULL != (key = asl_key(msg, i))); i++) {            
@@ -233,6 +238,7 @@
         
         [logEntries addObject:[self performSelector:selector withObject:logEntry]];  
         [logEntry release];
+        [pool drain];
     }
     
     aslresponse_free(response);  
