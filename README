@@ -9,7 +9,7 @@ It provides a simple means to search the system log.
 Filtering
 =========
 
-The following filter criteria:
+The following filter criteria is available:
 
 Time 	- x number of seconds back in time
 Sender 	- a substring of a sender
@@ -20,7 +20,7 @@ Criteria is combined using logical AND
 Example Usage
 =============
 
-    // Filter for message logged in the past hour
+    // Filter for messages logged in the past hour
     // containing 'SpringBoard' in the sender text
     // and 'wallpaper' in the message text
     //
