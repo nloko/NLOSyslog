@@ -52,9 +52,28 @@
     return [[[self alloc] init] autorelease];
 }
 
+-(id)init {
+    if ((self = [super init])) {
+        // Declare as instance members to make sure we aren't creating
+        // these over and over again
+        //
+        _timeKey = [[NSString alloc] initWithFormat:@"%s", ASL_KEY_TIME];        
+        _senderKey = [[NSString alloc] initWithFormat:@"%s", ASL_KEY_SENDER];
+        _pidKey = [[NSString alloc] initWithFormat:@"%s", ASL_KEY_PID];
+        _messageKey = [[NSString alloc] initWithFormat:@"%s", ASL_KEY_MSG];
+    }
+    
+    return self;
+}
+
 -(void)dealloc {
     self.senderFilter = nil;
     self.messageFilter = nil;
+    
+    [_timeKey release];
+    [_senderKey release];
+    [_pidKey release];
+    [_messageKey release];
     
     [super dealloc];
 }
@@ -164,19 +183,15 @@
 }
 
 -(id)objectForFormattedLogEntry:(id)data {
-    NSString * const msg = @"%@ %@[%@]: %@";
-    NSString * const timeKey = [NSString stringWithFormat:@"%s", ASL_KEY_TIME];
-    NSString * const senderKey = [NSString stringWithFormat:@"%s", ASL_KEY_SENDER];
-    NSString * const pidKey = [NSString stringWithFormat:@"%s", ASL_KEY_PID];
-    NSString * const messageKey = [NSString stringWithFormat:@"%s", ASL_KEY_MSG];
+    static NSString * const msgFormat = @"%@ %@[%@]: %@";
     
-    NSDate* entryTime = [NSDate dateWithTimeIntervalSince1970:[[data objectForKey:timeKey] doubleValue]];
-    NSString* logEntry = [NSString stringWithFormat:msg, [NSDateFormatter localizedStringFromDate:entryTime 
+    NSDate* entryTime = [NSDate dateWithTimeIntervalSince1970:[[data objectForKey:_timeKey] doubleValue]];
+    NSString* logEntry = [NSString stringWithFormat:msgFormat, [NSDateFormatter localizedStringFromDate:entryTime 
                                               dateStyle:NSDateFormatterMediumStyle 
                                               timeStyle:NSDateFormatterLongStyle],
-          [data objectForKey:senderKey],
-          [data objectForKey:pidKey],
-          [data objectForKey:messageKey]];
+          [data objectForKey:_senderKey],
+          [data objectForKey:_pidKey],
+          [data objectForKey:_messageKey]];
     
     return logEntry;
 }

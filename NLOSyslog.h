@@ -26,6 +26,11 @@
     NSTimeInterval _seconds;
     NSString* _senderFilter;
     NSString* _messageFilter;
+    
+    NSString* _timeKey;
+    NSString* _senderKey;
+    NSString* _messageKey;
+    NSString* _pidKey;
 }
 
 +(id)syslog;
