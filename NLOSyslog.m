@@ -30,7 +30,7 @@
            withOptions:(uint32_t)options 
                onQuery:(aslmsg)query;
 
--(NSArray*)pullLogWithSelector:(SEL)selector;
+-(NSArray*)pullLogUsingEntrySelector:(SEL)selector;
 
 @property (retain, nonatomic) NSString* senderFilter;
 @property (retain, nonatomic) NSString* messageFilter;
@@ -123,7 +123,7 @@
  * @return NSArray of NSDictionary objects
  */
 -(NSArray*)rawLog {
-    return [self pullLogWithSelector:@selector(objectForLogEntry:)];
+    return [self pullLogUsingEntrySelector:@selector(objectForLogEntry:)];
 }
 
 /**
@@ -147,7 +147,7 @@
  * @return NSArray of NSDictionary objects
  */
 -(NSArray*)formattedLog {
-    return [self pullLogWithSelector:@selector(objectForFormattedLogEntry:)];
+    return [self pullLogUsingEntrySelector:@selector(objectForFormattedLogEntry:)];
 }
 
 #pragma mark -
@@ -194,7 +194,7 @@
                   options);
 }
 
--(NSArray*)pullLogWithSelector:(SEL)selector {
+-(NSArray*)pullLogUsingEntrySelector:(SEL)selector {
     aslmsg msg;
     const char* key, *value;
     
