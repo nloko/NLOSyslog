@@ -2,7 +2,7 @@
 //  NLOSyslog.h
 //
 //  Created by Neil Loknath on 12-03-13.
-//  Copyright (c) 2012 Neil Loknath. All rights reserved.
+//  Copyright (c) 2012 Neil Loknath <neil.loknath@gmail.com>. All rights reserved.
 //
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
